@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: tturkowski/fruits-and-vegetables
+    container_name: roadsurfer_php
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - roadsurfer_net
+    environment:
+      - APP_ENV=${APP_ENV}
+    depends_on:
+      - mysql
+    tty: true
+    ports:
+      - "9000:9000"
+
+  nginx:
+    image: nginx:latest
+    container_name: roadsurfer_nginx
+    volumes:
+      - ./:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+    networks:
+      - roadsurfer_net
+
+  mysql:
+    image: mysql:8.0
+    container_name: roadsurfer_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: roadsurfer_db
+      MYSQL_USER: roadsurfer_user
+      MYSQL_PASSWORD: roadsurfer_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - roadsurfer_net
+    ports:
+      - "3306:3306"
+
+###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
+  mysql_data:
+
+networks:
+  roadsurfer_net:
+    driver: bridge
