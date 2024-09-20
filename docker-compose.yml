@@ -8,12 +8,12 @@ services:
     image: tturkowski/fruits-and-vegetables
     container_name: roadsurfer_php
     volumes:
-      - ./:/var/www/html
+      - ./app:/var/www/html
     working_dir: /var/www/html
     networks:
       - roadsurfer_net
-    environment:
-      - APP_ENV=${APP_ENV}
+    env_file:
+      - app/.env
     depends_on:
       - mysql
     tty: true
@@ -24,7 +24,7 @@ services:
     image: nginx:latest
     container_name: roadsurfer_nginx
     volumes:
-      - ./:/var/www/html
+      - ./app:/var/www/html
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - "8080:80"
@@ -48,25 +48,7 @@ services:
     ports:
       - "3306:3306"
 
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-    volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
-
 volumes:
-
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###
   mysql_data:
 
 networks:
