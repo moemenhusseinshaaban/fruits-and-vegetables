@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -23,17 +23,13 @@ abstract class Food
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $name;
+    public function __construct(
+        #[ORM\Column(type: 'string', length: 255)]
+        private string $name,
 
-    #[ORM\Column(type: 'float')]
-    private float $quantityInGrams;
-
-    public function __construct(string $name, float $quantityInGrams)
-    {
-        $this->name = $name;
-        $this->quantityInGrams = $quantityInGrams;
-    }
+        #[ORM\Column(type: 'float')]
+        private float $quantityInGrams
+    ) {}
 
     public function getId(): ?int
     {
