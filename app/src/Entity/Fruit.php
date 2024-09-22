@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FruitRepository::class)]
 class Fruit extends Food
 {
-    public function __construct(string $name, int $quantityInGrams)
+    public function __construct(?string $name, ?float $quantityInGrams)
     {
         parent::__construct($name, $quantityInGrams);
     }

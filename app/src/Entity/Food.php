@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FoodRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FoodRepository::class)]
 #[ORM\Table(name: 'food')]
@@ -25,10 +26,14 @@ abstract class Food
 
     public function __construct(
         #[ORM\Column(type: 'string', length: 255)]
-        private string $name,
+        #[Assert\NotBlank(message: "Name cannot be null.")]
+        #[Assert\Length(max: 255)]
+        private ?string $name,
 
         #[ORM\Column(type: 'float')]
-        private float $quantityInGrams
+        #[Assert\NotNull(message: "Quantity must be provided.")]
+        #[Assert\Positive(message: "Quantity must be a positive number.")]
+        private ?float $quantityInGrams
     ) {}
 
     public function getId(): ?int

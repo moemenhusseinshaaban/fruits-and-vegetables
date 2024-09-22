@@ -22,3 +22,16 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\Collection\FruitCollectionService:
+        tags: ['collection_services']
+        public: true
+
+    App\Service\Collection\VegetableCollectionService:
+        tags: ['collection_services']
+        public: true
+
+    App\Service\Resolver\CollectionResolver:
+        arguments:
+            $serviceLocator: !tagged_locator 'collection_services'
+        tags: ['container.service_subscriber']
