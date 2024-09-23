@@ -33,7 +33,11 @@ abstract class Food
         #[ORM\Column(type: 'float')]
         #[Assert\NotNull(message: "Quantity must be provided.")]
         #[Assert\Positive(message: "Quantity must be a positive number.")]
-        private ?float $quantityInGrams
+        private ?float $quantityInGrams,
+
+        #[ORM\Column(type: 'integer', unique: true)]
+        #[Assert\NotNull(message: "Quantity must be provided.")]
+        private ?int $externalId
     ) {}
 
     public function getId(): ?int
@@ -49,5 +53,10 @@ abstract class Food
     public function getQuantityInGrams(): float
     {
         return $this->quantityInGrams;
+    }
+
+    public function getExternalId(): int
+    {
+        return $this->externalId;
     }
 }

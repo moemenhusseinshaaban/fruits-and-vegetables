@@ -18,12 +18,12 @@ class VegetableCollectionService extends FoodCollectionService implements Collec
         parent::__construct($vegetableRepository, $entityManager);
     }
 
-    public function add(?string $name, ?float $quantity): Food
+    public function add(?string $name, ?float $quantity, ?int $externalId): Food
     {
-        $vegetable = new Vegetable($name, $quantity);
+        $vegetable = new Vegetable($name, $quantity, $externalId);
 
         $this->foodValidator->validate($vegetable);
-        
+
         $this->entityManager->persist($vegetable);
         $this->entityManager->flush();
 

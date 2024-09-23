@@ -6,7 +6,7 @@ use App\Entity\Food;
 
 interface CollectionInterface
 {
-    public function add(?string $name, ?float $quantity): Food;
+    public function add(?string $name, ?float $quantity, ?int $externalId): Food;
 
     public function remove(Food $food): void;
 

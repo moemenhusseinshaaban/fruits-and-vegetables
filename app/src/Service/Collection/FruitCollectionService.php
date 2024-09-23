@@ -18,9 +18,9 @@ class FruitCollectionService extends FoodCollectionService implements Collection
         parent::__construct($fruitRepository, $entityManager);
     }
 
-    public function add(?string $name, ?float $quantity): Food
+    public function add(?string $name, ?float $quantity, ?int $externalId): Food
     {
-        $fruit = new Fruit($name, $quantity);
+        $fruit = new Fruit($name, $quantity, $externalId);
 
         $this->foodValidator->validate($fruit);
 
