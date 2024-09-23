@@ -14,11 +14,11 @@ class CollectionResolver implements ServiceSubscriberInterface
     {
     }
 
-    public function resolve(FoodType $type): object
+    public function resolve(?string $type): object
     {
         return match ($type) {
-            FoodType::FRUIT => $this->serviceLocator->get(FruitCollectionService::class),
-            FoodType::VEGETABLE => $this->serviceLocator->get(VegetableCollectionService::class),
+            FoodType::FRUIT->value => $this->serviceLocator->get(FruitCollectionService::class),
+            FoodType::VEGETABLE->value => $this->serviceLocator->get(VegetableCollectionService::class),
             default => throw new \InvalidArgumentException("Unknown collection type $type"),
         };
     }

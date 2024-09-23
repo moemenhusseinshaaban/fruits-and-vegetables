@@ -3,9 +3,10 @@
 namespace App\Command;
 
 use App\Factory\FoodFactory;
-use App\Service\FileStorageService;
 use App\Service\ResultTracker;
 use Doctrine\ORM\EntityManagerInterface;
+use JsonMachine\Items;
+use JsonMachine\JsonDecoder\ExtJsonDecoder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -41,11 +42,10 @@ class ProcessFoodCommand extends Command
             return Command::FAILURE;
         }
 
-        $fileStorageService = new FileStorageService();
+        $jsonData = Items::fromFile($file, ['decoder' => new ExtJsonDecoder(true)]);
 
-        $jsonData = json_decode($fileStorageService->read($file), true);
-        if ($jsonData === null) {
-            $io->error('Invalid JSON.');
+        if (!$io->confirm('Are you sure you want to process this file and truncate the current food data?', false)) {
+            $io->warning('Command aborted.');
 
             return Command::FAILURE;
         }
@@ -56,13 +56,12 @@ class ProcessFoodCommand extends Command
         
         foreach ($jsonData as $item) {
             try {
-
                 $this->foodFactory->create($item);
 
                 $resultTracker->incrementSuccess();
             } catch (\Exception $e) {
                 $resultTracker->incrementFailure();
-                $io->error("Failed to add {$item['name']}: " . $e->getMessage());
+                $io->error("Failed to add " . json_encode($item) . ": " . $e->getMessage());
             }
         }
 
