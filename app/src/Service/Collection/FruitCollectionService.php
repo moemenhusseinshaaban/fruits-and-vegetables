@@ -8,7 +8,7 @@ use App\Repository\FruitRepository;
 use App\Service\Validator\FoodValidator;
 use Doctrine\ORM\EntityManagerInterface;
 
-class FruitCollectionService extends FoodCollectionService implements CollectionInterface
+class FruitCollectionService extends FoodCollectionService implements FoodTypeCollectionInterface
 {
     public function __construct(
         FruitRepository $fruitRepository,

@@ -4,11 +4,7 @@ namespace App\Service\Collection;
 
 use App\Entity\Food;
 
-interface CollectionInterface
+interface FoodTypeCollectionInterface
 {
     public function add(?string $name, ?float $quantity, ?int $externalId): Food;
-
-    public function remove(Food $food): void;
-
-    public function list(): array;
 }

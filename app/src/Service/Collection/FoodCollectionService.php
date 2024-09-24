@@ -6,7 +6,7 @@ use App\Entity\Food;
 use App\Repository\FoodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class FoodCollectionService
+class FoodCollectionService implements FoodCollectionInterface
 {
     public function __construct(
         protected readonly FoodRepository $repository, 
@@ -19,8 +19,8 @@ class FoodCollectionService
         $this->entityManager->flush();
     }
 
-    public function list(): array
+    public function list(array $filter = []): array
     {
-        return $this->repository->findAll();
+        return $this->repository->findByCriteria($filter);
     }
 }

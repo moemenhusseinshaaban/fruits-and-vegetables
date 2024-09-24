@@ -16,11 +16,33 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class FoodRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, string $entityClass = Food::class)
     {
-        parent::__construct($registry, Food::class);
+        parent::__construct($registry, $entityClass);
     }
 
+    public function findByCriteria(array $filters = [])
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        if (isset($filters['name'])) {
+            $qb->andWhere('f.name LIKE :name')
+            ->setParameter('name', '%' . $filters['name'] . '%');
+        }
+
+        if (isset($filters['minQuantityInGrams'])) {
+            $qb->andWhere('f.quantityInGrams >= :minQuantityInGrams')
+            ->setParameter('minQuantityInGrams', $filters['minQuantityInGrams']);
+        }
+
+        if (isset($filters['maxQuantityInGrams'])) {
+            $qb->andWhere('f.quantityInGrams <= :maxQuantityInGrams')
+            ->setParameter('maxQuantityInGrams', $filters['maxQuantityInGrams']);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+    
 //    /**
 //     * @return Food[] Returns an array of Food objects
 //     */
