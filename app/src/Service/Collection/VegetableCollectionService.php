@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service\Collection;
 
@@ -30,4 +32,3 @@ class VegetableCollectionService extends FoodCollectionService implements FoodTy
         return $vegetable;
     }
 }
-

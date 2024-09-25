@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service\Collection;
 
@@ -9,9 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 class FoodCollectionService implements FoodCollectionInterface
 {
     public function __construct(
-        protected readonly FoodRepository $repository, 
+        protected readonly FoodRepository $repository,
         protected readonly EntityManagerInterface $entityManager
-    ) {}
+    ) {
+    }
 
     public function remove(Food $food): void
     {

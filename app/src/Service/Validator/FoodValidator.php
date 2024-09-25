@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Service\Validator;
 
@@ -8,7 +10,9 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 class FoodValidator
 {
-    public function __construct(private readonly ValidatorInterface $validator) {}
+    public function __construct(private readonly ValidatorInterface $validator)
+    {
+    }
 
     public function validate(Food $food): void
     {

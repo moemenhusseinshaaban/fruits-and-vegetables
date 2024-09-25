@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Factory;
 
@@ -11,7 +13,8 @@ class FoodFactory
     public function __construct(
         private readonly CollectionResolver $collectionResolver,
         private readonly UnitConversionHelper $unitConversionHelper
-    ) {}
+    ) {
+    }
 
     public function create(array $item): Food
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -33,29 +35,28 @@ class FoodController extends AbstractController
             $collectionService = $type ? $this->collectionResolver->resolve($type) : $this->foodCollectionService;
 
             $filters = $this->createFiltersFromRequest($request);
-        
+
             $unit = $request->query->get('unit', Unit::GRAM->value);
             if (!in_array($unit, array_column(Unit::cases(), 'value'))) {
                 throw new BadRequestHttpException('Invalid unit provided. Allowed units are g and kg.');
             }
 
             $food = $collectionService->list($filters);
-
         } catch (BadRequestHttpException $e) {
             return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
             $this->logger->error('Error listing food items: ' . $e->getMessage());
             return new JsonResponse(['error' => 'Internal server error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
-        
+
         $jsonData = $this->serializer->serialize($food, 'json', [
             'groups' => [
-                'food:read', 
+                'food:read',
                 "food:read:unit:$unit"
             ],
         ]);
 
-        return new JsonResponse($jsonData, 200, [], true);
+        return new JsonResponse($jsonData, JsonResponse::HTTP_OK, [], true);
     }
 
     #[Route('/api/food', name: 'create_food', methods: ['POST'])]
@@ -63,21 +64,15 @@ class FoodController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         try {
-            
             $food = $foodFactory->create($data);
-
         } catch (ValidationFailedException $e) {
-
             return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         } catch (UniqueConstraintViolationException $e) {
-
             return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\InvalidArgumentException $e) {
-            
             return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
             $this->logger->error('Error creating food item: ' . $e->getMessage());
-            
             return new JsonResponse(['error' => 'Internal server error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
@@ -85,7 +80,7 @@ class FoodController extends AbstractController
             'success' => 'Food added successfully',
             'data' => json_decode($this->serializer->serialize($food, 'json', [
                 'groups' => [
-                    'food:read', 
+                    'food:read',
                     "food:read:unit:g"
                 ],
             ]))

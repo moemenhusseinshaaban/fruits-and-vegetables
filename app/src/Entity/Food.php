@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -32,18 +34,17 @@ abstract class Food
         #[Assert\Length(max: 255)]
         #[Groups(['food:read', 'food-subtype:read'])]
         protected ?string $name,
-
         #[ORM\Column(type: 'float')]
         #[Assert\NotNull(message: "Quantity must be provided.")]
         #[Assert\Positive(message: "Quantity must be a positive number.")]
         #[Groups(['food:read:unit:g'])]
         protected ?float $quantityInGrams,
-
         #[ORM\Column(type: 'integer', unique: true)]
         #[Assert\NotNull(message: "Quantity must be provided.")]
         #[Groups(['food:read', 'food-subtype:read'])]
         protected ?int $externalId
-    ) {}
+    ) {
+    }
 
     public function getId(): ?int
     {

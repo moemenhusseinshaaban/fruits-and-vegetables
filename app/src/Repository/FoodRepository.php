@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -42,7 +44,7 @@ class FoodRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-    
+
 //    /**
 //     * @return Food[] Returns an array of Food objects
 //     */

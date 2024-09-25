@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Factory\FoodFactory;
@@ -53,7 +55,7 @@ class ProcessFoodCommand extends Command
         $this->entityManager->getConnection()->executeStatement('TRUNCATE TABLE food');
 
         $resultTracker = new ResultTracker();
-        
+
         foreach ($jsonData as $item) {
             try {
                 $this->foodFactory->create($item);
