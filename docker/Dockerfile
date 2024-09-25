@@ -1,8 +1,8 @@
-FROM php:8.1-fpm-alpine3.15
+FROM php:8.2-fpm
 
 WORKDIR /var/www/html
 
-RUN apk add --no-cache git bash
+RUN apt-get update && apt-get install -y git bash && apt-get clean
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 

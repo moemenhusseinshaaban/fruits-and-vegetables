@@ -9,16 +9,16 @@ use App\Service\ResultTracker;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonMachine\Items;
 use JsonMachine\JsonDecoder\ExtJsonDecoder;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('app:process-food')]
 class ProcessFoodCommand extends Command
 {
-    protected static $defaultName = 'app:process-food';
-
     public function __construct(
         private readonly FoodFactory $foodFactory,
         private readonly EntityManagerInterface $entityManager,
