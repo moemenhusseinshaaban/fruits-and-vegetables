@@ -1,0 +1,151 @@
+paths:
+  /api/food/{type}:
+    get:
+      summary: 'List food items'
+      tags:
+        - Food
+      parameters:
+        - name: type
+          in: path
+          required: false
+          description: 'Type of the food (e.g., fruit, vegetable)'
+          schema:
+            type: string
+        - name: unit
+          in: query
+          required: false
+          description: 'Unit of measure (g or kg)'
+          schema:
+            type: string
+            enum: [g, kg]
+        - name: name
+          in: query
+          required: false
+          description: 'Filter by name'
+          schema:
+            type: string
+        - name: minQuantityInGrams
+          in: query
+          required: false
+          description: 'Minimum quantity in grams'
+          schema:
+            type: float
+        - name: maxQuantityInGrams
+          in: query
+          required: false
+          description: 'Maximum quantity in grams'
+          schema:
+            type: float
+      responses:
+        '200':
+          description: 'Successful response'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Food'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /api/food:
+    post:
+      summary: 'Create a new food item'
+      tags:
+        - Food
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: 'The External Id'                
+                name:
+                  type: string
+                  description: 'Name of the food'
+                quantity:
+                  type: float
+                  description: 'Quantity'
+                type:
+                  type: string
+                  description: 'food type'
+                  schema:
+                    type: string
+                    enum: [fruit, vegetable]
+                unit:
+                  type: string
+                  description: 'Quantity unit'
+                  schema:
+                    type: string
+                    enum: [g, kg]
+
+      responses:
+        '201':
+          description: 'Food item created successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Food'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    Food:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Food ID'
+        name:
+          type: string
+          description: 'Name of the food'
+        quantityInGrams:
+          type: float
+          description: 'Quantity in grams if requested unit in grams (default)'
+        externalId:
+          type: integer
+          description: 'The External Id'
+        quantityInKiloGrams:
+          type: float
+          description: 'Quantity in kilograms if requested unit in kilograms'

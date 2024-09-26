@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "e20a2650-cd9e-4fdd-8ba9-d362f0e57125",
+		"name": "fruites&vegetables",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37417493"
+	},
+	"item": [
+		{
+			"name": "list_food",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Role",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/food?unit=kg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"food"
+					],
+					"query": [
+						{
+							"key": "unit",
+							"value": "kg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_fruit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/food/fruit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"food",
+						"fruit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_vegetable",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/food/vegetable",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"food",
+						"vegetable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_food",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 30,\n    \"name\": \"Carrot\",\n    \"type\": \"vegetable\",\n    \"quantity\": 10,\n    \"unit\": \"kg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/food",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"food"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
