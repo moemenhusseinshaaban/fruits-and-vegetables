@@ -23,7 +23,6 @@ After finishing the implementation the service the project is upgraded to `Symfo
 - Install [docker-composer](https://docs.docker.com/compose/install/).
 
 ## Installation commands
--  create `.env` in the project root `teamleadercrm-coding-test/problem-1-discounts-solution/discounts`.
 - After cloning the project go to the project root directory `fruits-and-vegetables` in the terminal.
 - Run `docker-compose up --build`
 - After finishing, the server should be running and to check that go to http://localhost:8080
