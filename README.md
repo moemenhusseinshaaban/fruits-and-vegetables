@@ -4,9 +4,9 @@
 A service that receives a json file of food with types (fruit and vegetable) and save it in separate collections.
 After saving the external food data the service provides 2 Apis for listing the saved data and adding new records
 
-The service started with enhancing the curruent project that was provided by adding docker compose and creating other containers for supporting the service needs such as using `mysql` for the database and `nginx` for running the server.
+The service started with enhancing the current project that was provided by adding docker compose and creating other containers for supporting the service needs such as using `mysql` for the database and `nginx` for running the server.
 
-After finishing the implementation the service the project is upgraded to `Symfony 7.1`
+After finishing the implementation the project is upgraded to `Symfony 7.1`
 
 # Structure
 - `Symfony 7.1` framework
@@ -40,7 +40,7 @@ php bin/console doctrine:migration:migrate --env=test
 `bin/phpunit`
 
 # Usage
-- Run the below command for importing the food data and reqplace the `[Path-to-file]` with the file `request.json` or any other path to another file of food data.
+- Run the below command for importing the food data and replace the `[Path-to-file]` with the file `request.json` or any other path to another file of food data.
 `php bin/console app:process-food [Path-to-file]`
 - If you are using postman you can import [this](./Api-doc/fruites&vegetables.postman_collection.json) postman collection to use Apis.
 
