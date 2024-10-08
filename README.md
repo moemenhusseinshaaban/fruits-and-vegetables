@@ -1,5 +1,4 @@
 # 🍎🥕 Fruits and Vegetables
-# Discounts Solution
 
 # Introduction
 A service that receives a json file of food with types (fruit and vegetable) and save it in separate collections.
