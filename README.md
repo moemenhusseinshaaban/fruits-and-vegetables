@@ -50,8 +50,7 @@ php bin/console doctrine:migration:migrate --env=test
 - The command is reading the file in chunks for handling large size of json files.
 - The package `halaxa/json-machine` is used for reading the file in chunks.
 
-Note:
-If we'd like add or edit another command should be implemented for the purpose find or create the file data.
+Note: If we want to append the file data to the existing data we already have in the database, we will need to implement a new command for that.
 
 ## Apis
 - Two apis are implemented 
